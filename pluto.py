@@ -40,7 +40,8 @@ import urllib.parse
 import re
 from pywikihow import search_wikihow
 import bs4
-import time 
+import datetime as time
+import pywhatkit
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -50,6 +51,7 @@ engine.setProperty('rate', 150)
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
+
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -62,7 +64,8 @@ def wishMe():
     else:
         speak("Good Evening Sir")
 
-  
+    speak("hello sir i am loding all updates from pluto.py and turning on the security system where online and protected")
+    
 
 
 def takeCommand():
@@ -150,37 +153,6 @@ def YouTubeSearch(term):
 def SpeedTest():
 
     os.startfile("C:\\Users\\Hari\\Destny the ai\\SpeedTestGui.py")
-
-
-def CoronaVirus(Country):
-
-    countries = str(Country).replace(" ","")
-
-    url = f"https://www.worldometers.info/coronavirus/country/{countries}/"
-
-    result = requests.get(url)
-
-    soups = bs4.BeautifulSoup(result.text,'lxml')
-
-    corona = soups.find_all('div',class_ = 'maincounter-number')
-
-    Data = []
-
-    for case in corona:
-
-        span = case.find('span')
-
-        Data.append(span.string)
-
-    cases , Death , recovored = Data
-
-    speak(f"Cases : {cases}")
-    speak(f"Deaths : {Death}")
-    speak(f"Recovered : {recovored}")
-
-
-
-
 
 if __name__ == "__main__":
     wishMe()
@@ -293,8 +265,11 @@ if __name__ == "__main__":
             webbrowser.open(f"https://www.youtube.com/results?search_query={search}")
 
         #youtube auto
-        elif 'youtube' in query:
+        elif 'type on google' in query:
          speak("Whats Your Command ?")
+
+        if 'pause' in query:
+            keyboard.press('space bar')
 
         elif 'restart' in query:
             keyboard.press('0')
@@ -330,25 +305,7 @@ if __name__ == "__main__":
         elif 'history' in query:
             keyboard.press_and_release('ctrl +h')
 
-        #spotify auto
-        elif 'spotify' in query:
-         speak("Whats Your Command ?")
-
-        elif 'play music' in query:
-            time.sleep(3)
-            keyboard.press('space bar')
-
-        elif 'pause music' in query:
-            time.sleep(3)
-            keyboard.press('space bar')
-
-        elif 'up' in query:
-            keyboard.press_and_release('ctrl + Up')
-
-        elif 'down' in query:
-            keyboard.press_and_release('ctrl + Down')
-
-        #Talking
+          #Talking
 
         if 'hello' in query:
             speak("Hello Sir , I Am pluto .")
@@ -364,39 +321,15 @@ if __name__ == "__main__":
         elif 'yes' in query:
             speak("ok what is it?")
 
-        elif 'who is god' in query:
-            speak("a thing. i do not know.")
-
-        elif 'reboot pluto' in query:
-            speak("i can only close or shut down sorry.")
-
-        elif 'how much time you got' in query:
-            speak("i do not know. infinite.")
-
-        elif 'alexa' in query:
-            speak("i think alexa is smart and a good AI.")
-
-        elif 'print this' in query:
-            speak("whell i mean if you connect a printer to me than i can.")
-
-        elif 'how is you code doing' in query:
-            speak("i think its going good. do not have a suit yet i will tho with google cardborad if you put me on your phone")
-
-        elif 'you are important.' in query:
-            speak("thank you sir. i will update you if you have any reminders. just say reminders to check.")
-
         if 'what can you do' in query:
-            speak('so far i can tell the date and time tell jokes open website, control chrome and youtube. also i have a built in camera but when you use it. To close it restart pluto. i can talk create reminders. it can tell the news as whell. ')
+            speak('I can play music and tel joke just say play me random music ')
 
         elif 'you need a break' in query:
             speak("Ok Sir , You Can Call Me Anytime !")
             speak("Just Say Wake Up pluto!")
             break
-        
-        elif 'what discord server should i join' in query:
-            speak("you should join pluto Ai. Thanks to LemonStatue its had a completely new makeover Hope you like the server thank you.")
 
-        #Website open
+         #Website open
         elif 'launch' in query:
             speak("Tell Me The Name Of The Website!")
             name = takeCommand()
@@ -404,7 +337,7 @@ if __name__ == "__main__":
             webbrowser.open(web)
             speak("Done Sir!")
 
-        #open camera 
+         #open camera 
         elif 'open camera' in query:
             cap = cv2.VideoCapture(0)
             while True:
@@ -455,7 +388,3 @@ if __name__ == "__main__":
         elif 'speed test' in query:
             SpeedTest()
 
-        #music
-        elif 'playlist' in query:
-         webbrowser.open('https://open.spotify.com/playlist/3lwxBt2TvSSInoudjG7bPX?si=e3dc99c9d2be4e53')
-         
